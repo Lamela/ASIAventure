@@ -9,7 +9,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.Entite;
   */
 public class Monde{
 	private String nom;
-	private Entite[] entites;
+	private Entite[] entites = new Entite[0];
 
 	/**
 	  *Constructs a world with a specified name.
@@ -37,19 +37,9 @@ public class Monde{
 	  */
 	public Entite getEntite(String nom){
 		int i=0;
-		int longueur=this.entites.length;
-		boolean trouve=false;
-		Entite res = new Entite(){};
-		if(this.entites != null){
-			while(i<longueur && trouve == false){
-				if(this.entites[i].getNom().equals(nom)){
-					res = this.entites[i];
-					trouve = true;
-				}
-				i += 1;
-			}
-		}
-		return res;
+		while(entites[i].getNom() != nom)
+			i++;
+		return entites[i];
 	}
 
 	/**
@@ -60,25 +50,18 @@ public class Monde{
 	  *@exception EntiteDejaDansUnAutreMondeException if the entity exists in an another world
 	  */
 	public void ajouter(Entite entite) throws NomDEntiteDejaUtiliseDansLeMondeException, EntiteDejaDansUnAutreMondeException{
-		if(this.getEntite(entite.getNom()) != null)
-			throw new NomDEntiteDejaUtiliseDansLeMondeException("Nom d'entite deja utilise dans le monde.");
-		if(entite.getMonde() != this)
-			throw new EntiteDejaDansUnAutreMondeException("Entite deja dans un autre monde.");
-		if(this.entites == null){
-			this.entites = new Entite[1];
-			this.entites[0] = entite;
-		}
-		else{
-			if(this.getEntite(entite.getNom()).getNom()==null){
-				int longueur=this.entites.length;
-				Entite[] temp = new Entite[longueur+1];
-				for(int i=0;i<longueur;i++){
-					temp[i] = this.entites[i];
-				}
-				temp[longueur] = entite;
-				this.entites = temp;
+		for(int i=0;i<entites.length;i++){
+			if(entites[i].getNom().equals(entite.getNom())){
+				throw new NomDEntiteDejaUtiliseDansLeMondeException("Nom d'entite deja utilise dans le monde.");
 			}
 		}
+		if(!entite.getMonde().equals(this))
+			throw new EntiteDejaDansUnAutreMondeException("Entite deja dans un autre monde.");
+		int longueur=this.entites.length;
+		Entite[] temp = new Entite[longueur+1];
+		System.arraycopy(entites,0,temp,0,longueur);
+		temp[longueur] = entite;
+		this.entites = temp;
 	}
 
 	/**

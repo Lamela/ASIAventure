@@ -14,12 +14,6 @@ public abstract class Entite{
 	private Monde monde;
 
 	/**
-	  *Constructs an entity.
-	  */
-	public Entite(){
-	}
-
-	/**
 	  *Constructs an entity with the specified name and world..
 	  *
 	  *@param <code>nom</code> - the name of this entity.
