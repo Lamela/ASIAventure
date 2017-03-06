@@ -12,9 +12,8 @@ public class Monde{
 	private Entite[] entites;
 
 	/**
-	  *Creates a world with a specified name.
+	  *Constructs a world with a specified name.
 	  *
-	  *@author Lu Chenxin
 	  *@param <code>nom</code> - the name of the world we are going to create.
 	  */
 	public Monde(String nom){
@@ -24,7 +23,6 @@ public class Monde{
 	/**
 	  *Gets the name of this world.
 	  *
-	  *@author Lu Chenxin
 	  *@return the name of this world.
 	  */
 	public String getNom(){
@@ -34,7 +32,6 @@ public class Monde{
 	/**
 	  *Gets the entity with a name specified in this world.
 	  *
-	  *@author Lu Chenxin
 	  *@param <code>nom</code> - the name of the entity we are looking for in this world.
 	  *@return the entity with a name specified in this world.
 	  */
@@ -58,10 +55,15 @@ public class Monde{
 	/**
 	  *Add an entity in this world.
 	  *
-	  *@author Lu Chenxin
 	  *@param <code>entite</code> - the entity we are adding into this world.
+	  *@exception NomDEntiteDejaUtiliseDansLeMondeException if the name of the entity exists already in the world
+	  *@exception EntiteDejaDansUnAutreMondeException if the entity exists in an another world
 	  */
-	public void ajouter(Entite entite){
+	public void ajouter(Entite entite) throws NomDEntiteDejaUtiliseDansLeMondeException, EntiteDejaDansUnAutreMondeException{
+		if(this.getEntite(entite.getNom()) != null)
+			throw new NomDEntiteDejaUtiliseDansLeMondeException("Nom d'entite deja utilise dans le monde.");
+		if(entite.getMonde() != this)
+			throw new EntiteDejaDansUnAutreMondeException("Entite deja dans un autre monde.");
 		if(this.entites == null){
 			this.entites = new Entite[1];
 			this.entites[0] = entite;
@@ -82,7 +84,6 @@ public class Monde{
 	/**
 	  *Returns the string describes this world.
 	  *
-	  *@author Lu Chenxin
 	  *@return the string describes this world.
 	  */
 	public String toString(){
@@ -98,7 +99,3 @@ public class Monde{
 		return s.toString();
 	}
 }
-
-
-
-

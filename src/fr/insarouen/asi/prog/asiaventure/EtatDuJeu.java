@@ -1,7 +1,7 @@
 package fr.insarouen.asi.prog.asiaventure;
 
 /**
-  *Constructs an EtatDuJeu for the specified state.
+  *States of the game that it could be
   *
   *@author Lu Chenxin
   */

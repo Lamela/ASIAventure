@@ -1,9 +1,11 @@
 package fr.insarouen.asi.prog.asiaventure.elements;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
 
 /**
-  *A 
+  *An entity. 
   *
   *@author Lu Chenxin
   */
@@ -12,30 +14,33 @@ public abstract class Entite{
 	private Monde monde;
 
 	/**
-	  *Creates an entity.
-	  *
-	  *@author Lu Chenxin
+	  *Constructs an entity.
 	  */
 	public Entite(){
 	}
 
 	/**
-	  *Creates an entity with the specified name and world..
+	  *Constructs an entity with the specified name and world..
 	  *
-	  *@author Lu Chenxin
 	  *@param <code>nom</code> - the name of this entity.
 	  *@param <code>monde</code> - the world where this entity exists.
 	  */
-	public Entite(String nom, Monde monde){
+	public Entite(String nom, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
 		this.nom = nom;
 		this.monde = monde;
-		monde.ajouter(this);
+		try{
+			monde.ajouter(this);
+		}
+		catch(EntiteDejaDansUnAutreMondeException e){
+			e.printStackTrace();
+			System.err.println("Ne doit pas arriver!!");
+			System.exit(1);
+		}
 	}
 
 	/**
 	  *Gets the name of this entity.
 	  *
-	  *@author Lu Chenxin
 	  *@return the name of this entity.
 	  */
 	public String getNom(){
@@ -45,7 +50,6 @@ public abstract class Entite{
 	/**
 	  *Gets the world where this entity exists.
 	  *
-	  *@author Lu Chenxin
 	  *@return the world where this entity exists.
 	  */
 	public Monde getMonde(){
@@ -67,7 +71,6 @@ public abstract class Entite{
 	/**
 	  *Returns the string which describes this entity.
 	  *
-	  *@author Lu Chenxin
 	  *@return the string which describes this entity.
 	  */
 	public String toString(){
@@ -77,7 +80,6 @@ public abstract class Entite{
 	/**
 	  *Checks the contents of an object and this entity for equality.
 	  *
-	  *@author Lu Chenxin
 	  *@param <code>o</code> - the object
 	  *@return true if the content of object o equals to this entity, false otherwise.
 	  */
@@ -99,7 +101,6 @@ public abstract class Entite{
 	/**
 	  *Gets the sum of the hashcode of name and world
 	  *
-	  *@author Lu Chenxin
 	  *@return the sum of the hashcode of this entity's name and world.
 	  */
 	public int hashCode(){
