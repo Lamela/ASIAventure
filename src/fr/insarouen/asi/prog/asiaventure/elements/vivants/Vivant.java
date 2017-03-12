@@ -18,7 +18,7 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 public class Vivant extends Entite{
 	private int pointVie;
 	private int pointForce;
-	private Objet[] objets;
+	private Objet[] objets = new Objet[0];
 	private Piece piece;
 
 	/**
@@ -32,12 +32,13 @@ public class Vivant extends Entite{
 	  *@param <code>objets</code> - the list of the objects.
 	  *@exception NomDEntiteDejaUtiliseDansLeMondeException if the name of the living thing already exists in the world.
 	  */
-	public Vivant(String nom, Monde monde, int pointVie, int pointForce, Piece piece, Objet[] objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
+	public Vivant(String nom, Monde monde, int pointVie, int pointForce, Piece piece, Objet... objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
 	super(nom,monde);
 	this.pointVie = pointVie;
 	this.pointForce = pointForce;
 	this.piece = piece;
 	this.objets = objets;
+	piece.entrer(this);
 	}
 
 	/**
@@ -163,24 +164,9 @@ public class Vivant extends Entite{
 			throw new ObjetNonDeplacableException("L'objet non deplacable.");
 		if(this.getObjet(obj.getNom()) == null)
 			throw new ObjetAbsentDeLaPieceException("L'objet est absent de la piece.");
-		/*Objet res = new Objet(obj.getNom(),obj.getMonde()){
-			public boolean estDeplacable(){
-				return true;
-			}
-		};
-		res  = this.getPiece().retirer(obj);
-		if(this.objets == null){
-			this.objets  = new Objet[1];
-			this.objets[0] = res;
-		}
-		else{
-			if(!(this.possede(res)) && res.estDeplacable()){
-		*/
 		int longueur = this.objets.length;
 		Objet[] tmp = new Objet[longueur+1];
-		for(int i=0;i<longueur;i++){
-			tmp[i] = this.objets[i];
-		}
+		System.arraycopy(objets,0,tmp,0,longueur);
 		tmp[longueur] = this.getPiece().retirer(obj);
 		this.objets = tmp;
 	}

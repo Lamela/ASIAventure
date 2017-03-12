@@ -29,17 +29,19 @@ public class TestEntite {
 		entite4 = new Entite("test1",monde1){};
 	}
 
-	@Test
+	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
 	public void testConstructeurs() throws NomDEntiteDejaUtiliseDansLeMondeException{
 		assertThat(entite1.getNom(), IsEqual.equalTo("test"));
 		assertThat(entite1.getMonde().getNom(), IsEqual.equalTo("monde"));
+		Entite entite5 = new Entite("test",monde){};
 	}
 
-	@Test
+	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
 	public void testEquals() throws NomDEntiteDejaUtiliseDansLeMondeException{
 		assertTrue(entite1.equals((Object)entite1));
 		assertFalse(entite1.equals((Object)entite2));
 		assertFalse(entite1.equals((Object)entite3));
 		assertFalse(entite1.equals((Object)entite4));
+		Entite entite5 = new Entite("test",monde){};
 	}
 }

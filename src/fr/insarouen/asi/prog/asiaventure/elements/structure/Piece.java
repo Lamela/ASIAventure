@@ -17,8 +17,8 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
   */
 public class Piece extends ElementStructurel {
 	
-	private Objet[] objets;
-	private Vivant[] vivants;
+	private Objet[] objets = new Objet[0];
+	private Vivant[] vivants = new Vivant[0];
 
 	/**
 	  *Constructs a piece with the specified name and world.
@@ -97,20 +97,12 @@ public class Piece extends ElementStructurel {
 	  *@param <code>obj</code> - the object to put.
 	  */
 	public void deposer(Objet obj){
-		if(this.objets == null){
-			this.objets  = new Objet[1];
-			this.objets[0] = obj;
-		}
-		else{
-			if(!(this.contientObjet(obj))){
-				int longueur = this.objets.length;
-				Objet[] tmp = new Objet[longueur+1];
-				for(int i=0;i<longueur;i++){
-					tmp[i] = this.objets[i];
-				}
-				tmp[longueur] = obj;
-				this.objets = tmp;
-			}
+		if(!(this.contientObjet(obj))){
+			int longueur = this.objets.length;
+			Objet[] tmp = new Objet[longueur+1];
+			System.arraycopy(objets,0,tmp,0,longueur);
+			tmp[longueur] = obj;
+			this.objets = tmp;
 		}
 	}
 
@@ -120,20 +112,12 @@ public class Piece extends ElementStructurel {
 	  *@param <code>vivant</code> - the living thing to put.
 	  */
 	public void entrer(Vivant vivant){
-		if(this.vivants == null){
-			this.vivants  = new Vivant[1];
-			this.vivants[0] = vivant;
-		}
-		else{
-			if(!(this.contientVivant(vivant))){
-				int longueur = this.vivants.length;
-				Vivant[] tmp = new Vivant[longueur+1];
-				for(int i=0;i<longueur;i++){
-					tmp[i] = this.vivants[i];
-				}
-				tmp[longueur] = vivant;
-				this.vivants = tmp;
-			}
+		if(!(this.contientVivant(vivant))){
+			int longueur = this.vivants.length;
+			Vivant[] tmp = new Vivant[longueur+1];
+			System.arraycopy(vivants,0,tmp,0,longueur);
+			tmp[longueur] = vivant;
+			this.vivants = tmp;
 		}
 	}
 
@@ -175,7 +159,7 @@ public class Piece extends ElementStructurel {
 			int longueur = this.objets.length;
 			int i=0;
 			Objet[] tmp = new Objet[longueur-1];
-			while(i<longueur && !this.objets[i].equals(obj)){
+			while(i<longueur && !this.objets[i].equals((Object)obj)){
 				tmp[i] = this.objets[i];
 				i++;
 			}
@@ -202,7 +186,7 @@ public class Piece extends ElementStructurel {
 			int longueur = this.vivants.length;
 			int i=0;
 			Vivant[] tmp = new Vivant[longueur-1];
-			while(i<longueur && !this.vivants[i].equals(vivant)){
+			while(i<longueur && !this.vivants[i].equals((Object)vivant)){
 				tmp[i] = this.vivants[i];
 				i++;
 			}
