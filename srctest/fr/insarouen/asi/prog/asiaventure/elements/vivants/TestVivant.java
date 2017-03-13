@@ -10,6 +10,7 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class TestVivant{
 	public Objet objet5;
 	public Objet objet6;
 	public Vivant vivant;
-	public Objet[] objets = new Objet[3];
+	public Objet[] objets = new Objet[2];
 
 	@Before
 	public void avantTest() throws NomDEntiteDejaUtiliseDansLeMondeException{
@@ -47,11 +48,6 @@ public class TestVivant{
 			public boolean estDeplacable(){
 				return true;
 				}
-		};
-		objet3 = new Objet("objetNotDeplacable",monde){
-			public boolean estDeplacable(){
-				return false;
-			}
 		};
 		objet4 = new Objet("objetNotInTest1",monde){
 			public boolean estDeplacable(){
@@ -70,29 +66,23 @@ public class TestVivant{
 		};
 		piece.deposer(objet4);
 		piece.deposer(objet5);
-		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objet1,objet2,objet3);
+		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objet1,objet2);
 		objets[0] = objet1;
 		objets[1] = objet2;
-		objets[2] = objet3;
 	}
 
-	@Test(expected = ObjetNonDeplacableException.class)
-	public void testDeposer1() throws ObjetNonDeplacableException{
+	@Test(expected = ObjetNonPossedeParLeVivantException.class)
+	public void testDeposer() throws ObjetNonPossedeParLeVivantException{
 		vivant.deposer(objet1);
-		assertFalse(vivant.possede(objet1));
-		vivant.deposer(objet3);
-	}
-
-	@Test(expected = ObjetNonDeplacableException.class)
-	public void testDeposer2() throws ObjetNonDeplacableException{
+		assertThat(vivant.possede(objet1), IsEqual.equalTo(false));
 		vivant.deposer("objetDeplacable2");
-		assertFalse(vivant.possede(objet2));
-		vivant.deposer(objet3);
+		assertThat(vivant.possede(objet2), IsEqual.equalTo(false));
+		vivant.deposer(objet5);
 	}
 
 	@Test
 	public void testEstMort(){
-		assertFalse(vivant.estMort());
+		assertThat(vivant.estMort(), IsEqual.equalTo(false));
 	}
 
 	@Test
@@ -112,26 +102,26 @@ public class TestVivant{
 
 	@Test
 	public void testGetPointVie(){
-		assertTrue(vivant.getPointVie() == pointVie);
+		assertThat(vivant.getPointVie(), IsEqual.equalTo(pointVie));
 	}
 		
 	@Test
 	public void testGetPointForce(){
-		assertTrue(vivant.getPointForce() == pointForce);
+		assertThat(vivant.getPointForce(), IsEqual.equalTo(pointForce));
 	}
 
 	@Test
 	public void testPossede(){
-		assertTrue(vivant.possede(objet1));
+		assertThat(vivant.possede(objet1), IsEqual.equalTo(true));
 	}
 
 	@Test(expected = ObjetNonDeplacableException.class)
 	public void testPrendre1() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
 		vivant.prendre(objet4);
-		assertTrue(vivant.possede(objet4));
+		assertThat(vivant.possede(objet4), IsEqual.equalTo(true));
 		piece.deposer(objet4);
 		vivant.prendre("objetNotInTest1");
-		assertTrue(vivant.possede(objet4));
+		assertThat(vivant.possede(objet4), IsEqual.equalTo(true));
 		vivant.prendre(objet5);
 	}
 

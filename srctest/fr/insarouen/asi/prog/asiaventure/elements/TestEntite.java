@@ -38,10 +38,10 @@ public class TestEntite {
 
 	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
 	public void testEquals() throws NomDEntiteDejaUtiliseDansLeMondeException{
-		assertTrue(entite1.equals((Object)entite1));
-		assertFalse(entite1.equals((Object)entite2));
-		assertFalse(entite1.equals((Object)entite3));
-		assertFalse(entite1.equals((Object)entite4));
+		assertThat(entite1.equals((Object)entite1), IsEqual.equalTo(true));
+		assertThat(entite1.equals((Object)entite2), IsEqual.equalTo(false));
+		assertThat(entite1.equals((Object)entite3), IsEqual.equalTo(false));
+		assertThat(entite1.equals((Object)entite4), IsEqual.equalTo(false));
 		Entite entite5 = new Entite("test",monde){};
 	}
 }

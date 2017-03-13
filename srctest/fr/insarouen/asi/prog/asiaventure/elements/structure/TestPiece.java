@@ -59,29 +59,29 @@ public class TestPiece {
 	@Test
 	public void testContientObjet(){
 		piece1.deposer(objet1);
-		assertTrue(piece1.contientObjet(objet1));
-		assertTrue(piece1.contientObjet("objetInTest"));
-		assertFalse(piece1.contientObjet(objet2));
-		assertFalse(piece1.contientObjet("objetNotInTest"));
+		assertThat(piece1.contientObjet(objet1), IsEqual.equalTo(true));
+		assertThat(piece1.contientObjet("objetInTest"), IsEqual.equalTo(true));
+		assertThat(piece1.contientObjet(objet2), IsEqual.equalTo(false));
+		assertThat(piece1.contientObjet("objetNotInTest"), IsEqual.equalTo(false));
 	}
 
 	@Test
 	public void testContientVivant(){
-		assertTrue(piece1.contientVivant(vivant1));
-		assertTrue(piece1.contientVivant("vivantInTest"));
-		assertFalse(piece1.contientVivant(vivant2));
-		assertFalse(piece1.contientVivant("vivantNotInTest"));
+		assertThat(piece1.contientVivant(vivant1), IsEqual.equalTo(true));
+		assertThat(piece1.contientVivant("vivantInTest"), IsEqual.equalTo(true));
+		assertThat(piece1.contientVivant(vivant2), IsEqual.equalTo(false));
+		assertThat(piece1.contientVivant("vivantNotInTest"), IsEqual.equalTo(false));
 	}
 
 	@Test
 	public void testDeposer(){
 		piece1.deposer(objet1);
-		assertTrue(piece1.contientObjet(objet1));
+		assertThat(piece1.contientObjet(objet1), IsEqual.equalTo(true));
 	}
 
 	@Test
 	public void testEntrer(){
-		assertTrue(piece1.contientVivant(vivant1));
+		assertThat(piece1.contientVivant(vivant1), IsEqual.equalTo(true));
 	}
 
 	@Test
@@ -94,14 +94,14 @@ public class TestPiece {
 		Objet[] objetsTest = new Objet[0];
 		assertThat(piece1.retirer(objet1), IsEqual.equalTo(objet1));
 		assertThat(piece1.getObjets(), IsEqual.equalTo(objetsTest));
-		vivant1.deposer(objet1);
-		assertThat(piece1.retirer("objetInTest"), IsEqual.equalTo(objet1));
-		assertThat(piece1.getObjets(), IsEqual.equalTo(objetsTest));
 		piece1.retirer(objet2);
 	}
 
 	@Test(expected = ObjetNonDeplacableException.class)
 	public void testRetirer2() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
+		Objet[] objetsTest = new Objet[0];
+		assertThat(piece1.retirer("objetInTest"), IsEqual.equalTo(objet1));
+		assertThat(piece1.getObjets(), IsEqual.equalTo(objetsTest));
 		piece2.retirer(objet2);
 	}
 

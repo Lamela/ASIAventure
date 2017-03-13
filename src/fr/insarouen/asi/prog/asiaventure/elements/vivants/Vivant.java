@@ -8,6 +8,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 /**
@@ -45,12 +46,12 @@ public class Vivant extends Entite{
 	  *Puts the object from the living thing into the piece.
 	  *
 	  *@param <code>obj</code> - the object to put into the piece.
-	  *@exception ObjetNonDeplacableException if the object is not removable.
+	  *@exception ObjetNonPossedeParLeVivantException if the object is not removable.
 	  */
-	public void deposer(Objet obj) throws ObjetNonDeplacableException{
-		if(!obj.estDeplacable())
-			throw new ObjetNonDeplacableException("L'objet non deplacable.");
-		if(!(this.possede(obj))){
+	public void deposer(Objet obj) throws ObjetNonPossedeParLeVivantException{
+		if(!(this.possede(obj)))
+			throw new ObjetNonPossedeParLeVivantException("L'objet non deplacable.");
+		if(this.possede(obj)){
 			int longueur = this.objets.length;
 			int i=0;
 			Objet[] tmp = new Objet[longueur-1];
@@ -70,9 +71,9 @@ public class Vivant extends Entite{
 	  *Puts the object with the specified name from the living thing into the piece.
 	  *
 	  *@param <code>nomObj</code> - the name of the object to put into the piece.
-	  *@exception ObjetNonDeplacableException if the object is not removable.
+	  *@exception ObjetNonPossedeParLeVivantException if the object is not removable.
 	  */
-	public void deposer(String nomObj) throws ObjetNonDeplacableException{
+	public void deposer(String nomObj) throws ObjetNonPossedeParLeVivantException{
 		deposer((Objet)this.getMonde().getEntite(nomObj));
 	}
 
