@@ -27,8 +27,9 @@ public abstract class Entite{
 		}
 		catch(EntiteDejaDansUnAutreMondeException e){
 			e.printStackTrace();
-			System.err.println("Ne doit pas arriver!!");
-			System.exit(1);
+			//System.err.println("Ne doit pas arriver!!");
+			//System.exit(1);
+			throw new Error("Ne doit pas arriver!!");
 		}
 	}
 

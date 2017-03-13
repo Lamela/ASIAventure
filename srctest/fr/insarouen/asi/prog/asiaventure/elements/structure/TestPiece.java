@@ -1,5 +1,6 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
+import java.util.*;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
@@ -23,7 +24,7 @@ public class TestPiece {
 	public Piece piece2;
 	public Objet objet1;
 	public Objet objet2;
-	public Objet[] objets = new Objet[1];
+	public Collection<Objet> objets = new ArrayList<Objet>();
 	public Vivant vivant1;
 	public Vivant vivant2;
 
@@ -42,7 +43,7 @@ public class TestPiece {
 				return false;
 			}
 		};
-		objets[0] = objet1;
+		objets.add(objet1);
 		piece1.deposer(objet1);
 		piece2.deposer(objet2);
 		vivant1 = new Vivant("vivantInTest",monde,500,100,piece1,objet1);
@@ -86,28 +87,28 @@ public class TestPiece {
 
 	@Test
 	public void testGetObjets(){
-		assertThat(piece1.getObjets(), IsEqual.equalTo(objets));
+		assertThat(piece1.getObjets().containsAll(objets), IsEqual.equalTo(true));
 	}
 
 	@Test(expected = ObjetAbsentDeLaPieceException.class)
 	public void testRetirer1() throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
-		Objet[] objetsTest = new Objet[0];
+		Collection<Objet> objetsTest = new ArrayList<Objet>();
 		assertThat(piece1.retirer(objet1), IsEqual.equalTo(objet1));
-		assertThat(piece1.getObjets(), IsEqual.equalTo(objetsTest));
+		assertThat(piece1.getObjets().containsAll(objetsTest), IsEqual.equalTo(true));
 		piece1.retirer(objet2);
 	}
 
 	@Test(expected = ObjetNonDeplacableException.class)
 	public void testRetirer2() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
-		Objet[] objetsTest = new Objet[0];
+		Collection<Objet> objetsTest = new ArrayList<Objet>();
 		assertThat(piece1.retirer("objetInTest"), IsEqual.equalTo(objet1));
-		assertThat(piece1.getObjets(), IsEqual.equalTo(objetsTest));
+		assertThat(piece1.getObjets().containsAll(objetsTest), IsEqual.equalTo(true));
 		piece2.retirer(objet2);
 	}
 
 	@Test(expected = VivantAbsentDeLaPieceException.class)
 	public void testSortir() throws VivantAbsentDeLaPieceException{
-		Vivant[] vivantsTest = new Vivant[0];
+		Collection<Vivant> vivantsTest = new ArrayList<Vivant>();
 		assertThat(piece1.sortir(vivant1), IsEqual.equalTo(vivant1));
 		piece1.entrer(vivant1);
 		assertThat(piece1.sortir("vivantInTest"), IsEqual.equalTo(vivant1));

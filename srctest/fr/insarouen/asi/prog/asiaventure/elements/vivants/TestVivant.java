@@ -1,5 +1,6 @@
 package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 			
+import java.util.*;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
@@ -31,7 +32,7 @@ public class TestVivant{
 	public Objet objet5;
 	public Objet objet6;
 	public Vivant vivant;
-	public Objet[] objets = new Objet[2];
+	public HashMap<String,Objet> objets = new HashMap<>();
 
 	@Before
 	public void avantTest() throws NomDEntiteDejaUtiliseDansLeMondeException{
@@ -66,9 +67,9 @@ public class TestVivant{
 		};
 		piece.deposer(objet4);
 		piece.deposer(objet5);
-		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objet1,objet2);
-		objets[0] = objet1;
-		objets[1] = objet2;
+		objets.put(objet1.getNom(),objet1);
+		objets.put(objet2.getNom(),objet2);
+		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objets);
 	}
 
 	@Test(expected = ObjetNonPossedeParLeVivantException.class)
@@ -118,9 +119,6 @@ public class TestVivant{
 	@Test(expected = ObjetNonDeplacableException.class)
 	public void testPrendre1() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
 		vivant.prendre(objet4);
-		assertThat(vivant.possede(objet4), IsEqual.equalTo(true));
-		piece.deposer(objet4);
-		vivant.prendre("objetNotInTest1");
 		assertThat(vivant.possede(objet4), IsEqual.equalTo(true));
 		vivant.prendre(objet5);
 	}

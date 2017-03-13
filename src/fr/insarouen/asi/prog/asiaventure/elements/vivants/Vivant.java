@@ -1,5 +1,6 @@
 package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
+import java.util.*;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
@@ -19,7 +20,8 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 public class Vivant extends Entite{
 	private int pointVie;
 	private int pointForce;
-	private Objet[] objets = new Objet[0];
+	private HashMap<String,Objet> objets = new HashMap<>();
+	//private Objet[] objets = new Objet[0];
 	private Piece piece;
 
 	/**
@@ -33,7 +35,7 @@ public class Vivant extends Entite{
 	  *@param <code>objets</code> - the list of the objects.
 	  *@exception NomDEntiteDejaUtiliseDansLeMondeException if the name of the living thing already exists in the world.
 	  */
-	public Vivant(String nom, Monde monde, int pointVie, int pointForce, Piece piece, Objet... objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
+	public Vivant(String nom, Monde monde, int pointVie, int pointForce, Piece piece, HashMap<String,Objet> objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
 	super(nom,monde);
 	this.pointVie = pointVie;
 	this.pointForce = pointForce;
@@ -52,6 +54,7 @@ public class Vivant extends Entite{
 		if(!(this.possede(obj)))
 			throw new ObjetNonPossedeParLeVivantException("L'objet non deplacable.");
 		if(this.possede(obj)){
+			/*
 			int longueur = this.objets.length;
 			int i=0;
 			Objet[] tmp = new Objet[longueur-1];
@@ -63,6 +66,8 @@ public class Vivant extends Entite{
 				tmp[j] = this.objets[j+1];
 			}
 			this.objets = tmp;
+			*/
+			this.objets.remove(obj.getNom());
 			this.getPiece().deposer(obj);
 		}
 	}
@@ -101,7 +106,7 @@ public class Vivant extends Entite{
 	  *
 	  *@return the list of objects.
 	  */
-	public Objet[] getObjets(){
+	public HashMap<String,Objet> getObjets(){
 		return this.objets;
 	}
 
@@ -139,6 +144,7 @@ public class Vivant extends Entite{
 	  *@return true if the living thing possesses the object, false otherwise.
 	  */
 	public boolean possede(Objet obj){
+		/*
 		int longueur = this.objets.length;
 		int i=0;
 		boolean possede = false;
@@ -151,6 +157,8 @@ public class Vivant extends Entite{
 			}
 		}
 		return possede;
+		*/
+		return objets.containsKey(obj.getNom());
 	}
 
 	/**
@@ -163,13 +171,16 @@ public class Vivant extends Entite{
 	public void prendre(Objet obj) throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
 		if(!obj.estDeplacable())
 			throw new ObjetNonDeplacableException("L'objet non deplacable.");
-		if(this.getObjet(obj.getNom()) == null)
+		if(!this.piece.contientObjet(obj))
 			throw new ObjetAbsentDeLaPieceException("L'objet est absent de la piece.");
+		/*
 		int longueur = this.objets.length;
 		Objet[] tmp = new Objet[longueur+1];
 		System.arraycopy(objets,0,tmp,0,longueur);
 		tmp[longueur] = this.getPiece().retirer(obj);
 		this.objets = tmp;
+		*/
+		objets.put(obj.getNom(),obj);
 	}
 
 	/**
@@ -198,12 +209,19 @@ public class Vivant extends Entite{
 		s.append("Piece: ");
 		s.append(this.getPiece());
 		s.append(".\n");
+		/*
 		int longueur = this.objets.length;
 		for(int i=0;i<longueur;i++){
 			s.append("Nom de l'objet: ");
 			s.append(this.objets[i].getNom());
 			s.append(".\n");
 		}
+		*/
+		objets.forEach((String,Objet) -> {
+			s.append("Nom de l'objet: ");
+			s.append(String);
+			s.append(".\n");
+		});
 		return s.toString();
 	}
 }
