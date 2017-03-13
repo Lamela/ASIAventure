@@ -90,7 +90,7 @@ public class TestPiece {
 	}
 
 	@Test(expected = ObjetAbsentDeLaPieceException.class)
-	public void testRetirer1(){
+	public void testRetirer1() throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
 		Objet[] objetsTest = new Objet[0];
 		assertThat(piece1.retirer(objet1), IsEqual.equalTo(objet1));
 		assertThat(piece1.getObjets(), IsEqual.equalTo(objetsTest));
@@ -101,12 +101,12 @@ public class TestPiece {
 	}
 
 	@Test(expected = ObjetNonDeplacableException.class)
-	public void testRetirer2(){
+	public void testRetirer2() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
 		piece2.retirer(objet2);
 	}
 
 	@Test(expected = VivantAbsentDeLaPieceException.class)
-	public void testSortir(){
+	public void testSortir() throws VivantAbsentDeLaPieceException{
 		Vivant[] vivantsTest = new Vivant[0];
 		assertThat(piece1.sortir(vivant1), IsEqual.equalTo(vivant1));
 		piece1.entrer(vivant1);

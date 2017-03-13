@@ -1,7 +1,8 @@
-package fr.insarouen.asi.prog.asiaventure.elements.structure;
+package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 			
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
@@ -76,9 +77,14 @@ public class TestVivant{
 	}
 
 	@Test(expected = ObjetNonDeplacableException.class)
-	public void testDeposer(){
+	public void testDeposer1() throws ObjetNonDeplacableException{
 		vivant.deposer(objet1);
 		assertFalse(vivant.possede(objet1));
+		vivant.deposer(objet3);
+	}
+
+	@Test(expected = ObjetNonDeplacableException.class)
+	public void testDeposer2() throws ObjetNonDeplacableException{
 		vivant.deposer("objetDeplacable2");
 		assertFalse(vivant.possede(objet2));
 		vivant.deposer(objet3);
@@ -120,17 +126,17 @@ public class TestVivant{
 	}
 
 	@Test(expected = ObjetNonDeplacableException.class)
-	public void testPrendre1(){
+	public void testPrendre1() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
 		vivant.prendre(objet4);
 		assertTrue(vivant.possede(objet4));
-		vivant.deposer(objet4);
+		piece.deposer(objet4);
 		vivant.prendre("objetNotInTest1");
 		assertTrue(vivant.possede(objet4));
 		vivant.prendre(objet5);
 	}
 
 	@Test(expected = ObjetAbsentDeLaPieceException.class)
-	public void testPrendre2(){
+	public void testPrendre2() throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
 		vivant.prendre(objet6);
 	}
 }
