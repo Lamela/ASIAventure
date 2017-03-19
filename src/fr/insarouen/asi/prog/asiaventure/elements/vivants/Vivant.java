@@ -11,6 +11,13 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPiece
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Activable;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+
 
 /**
   *A living thing.
@@ -192,6 +199,51 @@ public class Vivant extends Entite{
 	  */
 	public void prendre(String nomObj)throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException{
 		prendre((Objet)this.getMonde().getEntite(nomObj));
+	}
+
+	/**
+	  *Activates the activable thing.
+	  *
+	  *@param <code>activable</code> - the activable thing.
+	  */
+	public void activerActivable(Activable activable) throws ActivationException{
+		activable.activer();
+	}
+
+	/**
+	  *Activates the activable thing with the specified object.
+	  *
+	  *@param <code>activable</code> - the activable thing.
+	  *@param <code>objet</code> - the specified object.
+	  */
+	public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException{
+		activable.activerAvec(objet);
+	}
+
+	/**
+	  *Passes the specified door.
+	  *
+	  *@param <code>porte</code> - the door.
+	  *@exception PorteFermeException if the door is closed.
+	  *@exception PorteInexistanteDansLaPieceException if the door does not exists in the piece.
+	  */
+	public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+		if(porte.getEtat() == Etat.FERME)
+			throw new PorteFermeException("La porte est ferme.");
+		if(this.getPiece().aLaPorte(porte) == false)
+			throw new PorteInexistanteDansLaPieceException("La porte n'est pas dans la piece.");
+		this.piece = porte.getPieceAutreCote();
+	}
+
+	/**
+	  *Passes the door with the specified name.
+	  *
+	  *@param <code>nomPorte</code> - the name of the door.
+	  *@exception PorteFermeException if the door is closed.
+	  *@exception PorteInexistanteDansLaPieceException if the door does not exists in the piece.
+	  */
+	public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+		franchir((Porte)this.getMonde().getEntite(nomPorte));
 	}
 
 	/**

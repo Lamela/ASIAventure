@@ -10,6 +10,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableExcep
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 
 /**
   *A piece.
@@ -20,6 +21,7 @@ public class Piece extends ElementStructurel {
 	
 	private Map<String,Objet> objets = new HashMap<>();
 	private Map<String,Vivant> vivants = new HashMap<>();
+	private Map<String,Porte> portes = new HashMap<>();
 	//private Objet[] objets = new Objet[0];
 	//private Vivant[] vivants = new Vivant[0];
 
@@ -52,7 +54,7 @@ public class Piece extends ElementStructurel {
 			return trouve;
 		}
 		*/
-		return objets.containsKey(nomObj);
+		return this.objets.containsKey(nomObj);
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class Piece extends ElementStructurel {
 	  *@return true if it exists, false otherwise.
 	  */
 	public boolean contientObjet(Objet obj){
-		return contientObjet(obj.getNom());
+		return this.contientObjet(obj.getNom());
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class Piece extends ElementStructurel {
 		}
 		return trouve;
 		*/
-		return contientVivant(vivant.getNom()); 
+		return this.contientVivant(vivant.getNom()); 
 	}
 
 	/**
@@ -96,7 +98,7 @@ public class Piece extends ElementStructurel {
 	  *@return true if it exists, false otherwise.
 	  */
 	public boolean contientVivant(String nomVivant){
-		return vivants.containsKey(nomVivant); 
+		return this.vivants.containsKey(nomVivant); 
 	}
 
 	/**
@@ -111,7 +113,7 @@ public class Piece extends ElementStructurel {
 			//System.arraycopy(objets,0,tmp,0,longueur);
 			//tmp[longueur] = obj;
 			//this.objets = tmp;
-			objets.put(obj.getNom(),obj);
+			this.objets.put(obj.getNom(),obj);
 		}
 	}
 
@@ -127,7 +129,7 @@ public class Piece extends ElementStructurel {
 			//System.arraycopy(vivants,0,tmp,0,longueur);
 			//tmp[longueur] = vivant;
 			//this.vivants = tmp;
-			vivants.put(vivant.getNom(),vivant);
+			this.vivants.put(vivant.getNom(),vivant);
 		}
 	}
 
@@ -137,7 +139,7 @@ public class Piece extends ElementStructurel {
 	  *@return <code>Objet[]</code>.
 	  */
 	public Collection<Objet> getObjets(){
-		return objets.values();
+		return this.objets.values();
 	}
 
 	/**
@@ -149,7 +151,7 @@ public class Piece extends ElementStructurel {
 	  *@exception ObjetNonDeplacableException if it's impossible to remove the object from the piece.
 	  */
 	public Objet retirer(String nomObj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
-		return retirer((Objet)this.getMonde().getEntite(nomObj));
+		return this.retirer((Objet)this.getMonde().getEntite(nomObj));
 	}
 
 	/**
@@ -180,7 +182,7 @@ public class Piece extends ElementStructurel {
 			this.objets = tmp;
 			return obj;
 			*/
-			return objets.remove(obj.getNom());
+			return this.objets.remove(obj.getNom());
 		}
 		return null;
 	}
@@ -210,7 +212,7 @@ public class Piece extends ElementStructurel {
 			this.vivants = tmp;
 			return vivant;
 			*/
-			return vivants.remove(vivant.getNom());
+			return this.vivants.remove(vivant.getNom());
 		}
 		return null;
 	}
@@ -224,6 +226,45 @@ public class Piece extends ElementStructurel {
 	  */
 	public Vivant sortir(String nomVivant) throws VivantAbsentDeLaPieceException{
 		return ((Vivant)this.getMonde().getEntite(nomVivant));
+	}
+	
+	/**
+	  *Adds a door into the piece.
+	  *
+	  *@param <code>porte</code> - the door to add.
+	  */
+	protected void addPorte(Porte porte){
+		this.portes.put(porte.getNom(),porte);
+	}
+	
+	/**
+	  *Checks if the door with the specified name exists in the piece.
+	  *
+	  *@param <code>nomPorte</code> - the name of the door.
+	  *@return true if it exists, false otherwise.
+	  */
+	public boolean aLaPorte(String nomPorte){
+		return this.portes.containsKey(nomPorte);
+	}
+
+	/**
+	  *Checks if the specified door exists in the piece.
+	  *
+	  *@param <code>porte</code> - the door.
+	  *@return true if it exists, false otherwise.
+	  */
+	public boolean aLaPorte(Porte porte){
+		return this.aLaPorte(porte.getNom());
+	}
+
+	/**
+	  *Gets the door with the specified name in the piece.
+	  *
+	  *@param <code>nomPorte</code> - the name of the door.
+	  *@return the door.
+	  */
+	public Porte getPorte(String nomPorte){
+		return this.portes.get(nomPorte);
 	}
 
 	/**

@@ -72,6 +72,17 @@ public class TestVivant{
 		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objets);
 	}
 
+	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
+	public void testConstructeurs() throws NomDEntiteDejaUtiliseDansLeMondeException{
+		assertThat(vivant.getNom(), IsEqual.equalTo("test"));
+		assertThat(vivant.getMonde().getNom(), IsEqual.equalTo("monde"));
+		assertThat(vivant.getPointForce(), IsEqual.equalTo(pointForce));
+		assertThat(vivant.getPointVie(), IsEqual.equalTo(pointVie));
+		assertThat(vivant.getPiece(), IsEqual.equalTo(piece));
+		assertThat(vivant.getObjets(), IsEqual.equalTo(objets));
+		Vivant vivant1 = new Vivant("test",monde,700,20,piece,objets);
+	}
+
 	@Test(expected = ObjetNonPossedeParLeVivantException.class)
 	public void testDeposer() throws ObjetNonPossedeParLeVivantException{
 		vivant.deposer(objet1);

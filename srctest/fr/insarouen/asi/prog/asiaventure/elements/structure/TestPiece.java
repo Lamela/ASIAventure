@@ -24,7 +24,9 @@ public class TestPiece {
 	public Piece piece2;
 	public Objet objet1;
 	public Objet objet2;
-	public Collection<Objet> objets = new ArrayList<Objet>();
+	public HashMap<String,Objet> objets1 = new HashMap<>();
+	public HashMap<String,Objet> objets2 = new HashMap<>();
+	public Collection<Objet> objets3 = new ArrayList<Objet>();
 	public Vivant vivant1;
 	public Vivant vivant2;
 
@@ -43,11 +45,13 @@ public class TestPiece {
 				return false;
 			}
 		};
-		objets.add(objet1);
+		objets1.put(objet1.getNom(),objet1);
+		objets2.put(objet2.getNom(),objet2);
+		objets3.add(objet1);
 		piece1.deposer(objet1);
 		piece2.deposer(objet2);
-		vivant1 = new Vivant("vivantInTest",monde,500,100,piece1,objet1);
-		vivant2 = new Vivant("vivantNotInTest",monde,600,200,piece2,objet2);
+		vivant1 = new Vivant("vivantInTest",monde,500,100,piece1,objets1);
+		vivant2 = new Vivant("vivantNotInTest",monde,600,200,piece2,objets2);
 	}
 
 	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
@@ -59,7 +63,6 @@ public class TestPiece {
 	
 	@Test
 	public void testContientObjet(){
-		piece1.deposer(objet1);
 		assertThat(piece1.contientObjet(objet1), IsEqual.equalTo(true));
 		assertThat(piece1.contientObjet("objetInTest"), IsEqual.equalTo(true));
 		assertThat(piece1.contientObjet(objet2), IsEqual.equalTo(false));
@@ -76,7 +79,6 @@ public class TestPiece {
 
 	@Test
 	public void testDeposer(){
-		piece1.deposer(objet1);
 		assertThat(piece1.contientObjet(objet1), IsEqual.equalTo(true));
 	}
 
@@ -87,7 +89,7 @@ public class TestPiece {
 
 	@Test
 	public void testGetObjets(){
-		assertThat(piece1.getObjets().containsAll(objets), IsEqual.equalTo(true));
+		assertThat(piece1.getObjets().containsAll(objets3), IsEqual.equalTo(true));
 	}
 
 	@Test(expected = ObjetAbsentDeLaPieceException.class)
@@ -110,9 +112,6 @@ public class TestPiece {
 	public void testSortir() throws VivantAbsentDeLaPieceException{
 		Collection<Vivant> vivantsTest = new ArrayList<Vivant>();
 		assertThat(piece1.sortir(vivant1), IsEqual.equalTo(vivant1));
-		piece1.entrer(vivant1);
-		assertThat(piece1.sortir("vivantInTest"), IsEqual.equalTo(vivant1));
-		piece1.sortir(vivant1);
 		piece1.sortir(vivant2);
 	}
 }
