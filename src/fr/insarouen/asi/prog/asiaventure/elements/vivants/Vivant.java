@@ -232,7 +232,7 @@ public class Vivant extends Entite{
 			throw new PorteFermeException("La porte est ferme.");
 		if(this.getPiece().aLaPorte(porte) == false)
 			throw new PorteInexistanteDansLaPieceException("La porte n'est pas dans la piece.");
-		this.piece = porte.getPieceAutreCote();
+		this.piece = porte.getPieceAutreCote(this.getPiece());
 	}
 
 	/**
@@ -244,6 +244,24 @@ public class Vivant extends Entite{
 	  */
 	public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
 		franchir((Porte)this.getMonde().getEntite(nomPorte));
+	}
+
+	/**
+	  *Sets the HP.
+	  *
+	  *@param <code>pointVie</code> - the HP of the living thing.
+	  */
+	public void setPointVie(int pointVie){
+		this.pointVie = pointVie;
+	}
+
+    /**
+	  *Sets the objects.
+	  *
+	  *@param <code>mapObjets</code> - the objects to replace the objects existing.
+	  */
+	protected void setObjets(HashMap<String,Objet> mapObjets){
+		this.objets = mapObjets;
 	}
 
 	/**
@@ -269,9 +287,9 @@ public class Vivant extends Entite{
 			s.append(".\n");
 		}
 		*/
-		objets.forEach((String,Objet) -> {
+		objets.forEach((string,objet) -> {
 			s.append("Nom de l'objet: ");
-			s.append(String);
+			s.append(string);
 			s.append(".\n");
 		});
 		return s.toString();

@@ -3,20 +3,15 @@ package fr.insarouen.asi.prog.asiaventure.elements.structure;
 import java.util.*;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.hamcrest.core.IsEqual;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 public class TestPiece {
 	public Monde monde;
@@ -29,6 +24,8 @@ public class TestPiece {
 	public Collection<Objet> objets3 = new ArrayList<Objet>();
 	public Vivant vivant1;
 	public Vivant vivant2;
+	public HashMap<String,Porte> portes = new HashMap<>();
+	public Porte porte;
 
 	@Before
 	public void avantTest() throws NomDEntiteDejaUtiliseDansLeMondeException{
@@ -52,6 +49,7 @@ public class TestPiece {
 		piece2.deposer(objet2);
 		vivant1 = new Vivant("vivantInTest",monde,500,100,piece1,objets1);
 		vivant2 = new Vivant("vivantNotInTest",monde,600,200,piece2,objets2);
+		porte = new Porte("porte",monde,piece1,piece2);
 	}
 
 	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
@@ -113,5 +111,15 @@ public class TestPiece {
 		Collection<Vivant> vivantsTest = new ArrayList<Vivant>();
 		assertThat(piece1.sortir(vivant1), IsEqual.equalTo(vivant1));
 		piece1.sortir(vivant2);
+	}
+
+	@Test
+	public void testAddPorte(){
+		assertThat(piece1.aLaPorte(porte), IsEqual.equalTo(true));
+	}
+
+	@Test
+	public void testALaPorte(){
+		assertThat(piece1.aLaPorte(porte), IsEqual.equalTo(piece2.aLaPorte(porte)));
 	}
 }

@@ -6,19 +6,15 @@ import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.hamcrest.core.IsEqual;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 public class TestVivant{
 	public Monde monde;

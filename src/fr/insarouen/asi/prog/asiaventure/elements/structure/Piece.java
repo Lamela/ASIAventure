@@ -136,10 +136,19 @@ public class Piece extends ElementStructurel {
 	/**
 	  *Gets all the objects in the piece.
 	  *
-	  *@return <code>Objet[]</code>.
+	  *@return <code>Collection<Objet></code>.
 	  */
 	public Collection<Objet> getObjets(){
 		return this.objets.values();
+	}
+	
+	/**
+	  *Gets all the doors in the piece.
+	  *
+	  *@return <code>Collection<Porte></code>.
+	  */
+	public Collection<Porte> getPortes(){
+		return this.portes.values();
 	}
 
 	/**
@@ -268,6 +277,15 @@ public class Piece extends ElementStructurel {
 	}
 
 	/**
+	  *Sets the objects in the piece.
+	  *
+	  *@param <code>mapObjets</code> - the objects to replace which exists already in the piece.
+	  */
+	public void setObjets(HashMap<String, Objet> mapObjets){
+		this.objets = mapObjets;
+	}
+
+	/**
 	  *Returns the string which describes this piece.
 	  *
 	  *@return the string which describes this piece.
@@ -282,9 +300,9 @@ public class Piece extends ElementStructurel {
 		//	s.append(this.objets[i].getNom());
 		//	s.append(".\n");
 		//}
-		objets.forEach((String,Objet) -> {
+		objets.forEach((string,objet) -> {
 			s.append("Nom de l'objet: ");
-			s.append(String);
+			s.append(string);
 			s.append(".\n");
 		});
 		return s.toString();
