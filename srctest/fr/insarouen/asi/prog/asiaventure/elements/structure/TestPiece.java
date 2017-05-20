@@ -19,8 +19,8 @@ public class TestPiece {
 	public Piece piece2;
 	public Objet objet1;
 	public Objet objet2;
-	public HashMap<String,Objet> objets1 = new HashMap<>();
-	public HashMap<String,Objet> objets2 = new HashMap<>();
+	public Objet[] objets1 = new Objet[1]; 
+	public Objet[] objets2 = new Objet[1];
 	public Collection<Objet> objets3 = new ArrayList<Objet>();
 	public Vivant vivant1;
 	public Vivant vivant2;
@@ -42,8 +42,8 @@ public class TestPiece {
 				return false;
 			}
 		};
-		objets1.put(objet1.getNom(),objet1);
-		objets2.put(objet2.getNom(),objet2);
+		objets1[0] = objet1;
+		objets2[0] = objet2;
 		objets3.add(objet1);
 		piece1.deposer(objet1);
 		piece2.deposer(objet2);

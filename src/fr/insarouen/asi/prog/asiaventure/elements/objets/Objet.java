@@ -1,5 +1,6 @@
 package fr.insarouen.asi.prog.asiaventure.elements.objets;
 
+import java.io.Serializable;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
@@ -8,6 +9,7 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
   *An object.
   *
   *@author Lu Chenxin
+  *@serial
   */
 public abstract class Objet extends Entite{
 
@@ -23,6 +25,8 @@ public abstract class Objet extends Entite{
 
 	/**
 	  *Checks the mobility of this object.
+	  *
+	  *@return the mobility.
 	  */
 	public abstract boolean estDeplacable();
 

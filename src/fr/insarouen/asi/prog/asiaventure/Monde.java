@@ -1,14 +1,18 @@
 package fr.insarouen.asi.prog.asiaventure;
 
 import java.util.*;
+import java.io.Serializable;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.Executable;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
 /**
   *A world.
   *
   *@author Lu Chenxin
+  *@serial
   */
-public class Monde{
+public class Monde implements java.io.Serializable{
 	private String nom;
 	private List<Entite> entites = new ArrayList<Entite>();
 	//private Entite[] entites = new Entite[0];
@@ -75,6 +79,21 @@ public class Monde{
 		this.entites = temp;
 		*/
 		entites.add(entite);
+	}
+
+	/**
+	  *Gets the collection of objects executable.
+	  *
+	  *@return the collection of objects executable.
+	  */
+	public Collection<Executable> getExecutable(){
+		Collection<Executable> executable = new ArrayList<Executable>();
+		for(Entite e: this.entites){
+			if(e instanceof Vivant){
+				executable.add((Executable)e);
+			}
+		}
+		return executable;
 	}
 
 	/**

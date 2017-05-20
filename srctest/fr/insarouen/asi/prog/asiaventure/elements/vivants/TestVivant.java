@@ -28,7 +28,8 @@ public class TestVivant{
 	public Objet objet5;
 	public Objet objet6;
 	public Vivant vivant;
-	public HashMap<String,Objet> objets = new HashMap<>();
+	public HashMap<String,Objet> objets1 = new HashMap<>();
+	public Objet[] objets2 = new Objet[2];
 
 	@Before
 	public void avantTest() throws NomDEntiteDejaUtiliseDansLeMondeException{
@@ -63,9 +64,11 @@ public class TestVivant{
 		};
 		piece.deposer(objet4);
 		piece.deposer(objet5);
-		objets.put(objet1.getNom(),objet1);
-		objets.put(objet2.getNom(),objet2);
-		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objets);
+		objets2[0] = objet1;
+		objets2[1] = objet2;
+		objets1.put(objet1.getNom(),objet1);
+		objets1.put(objet2.getNom(),objet2);
+		vivant = new Vivant("test",monde,pointVie,pointForce,piece,objets2);
 	}
 
 	@Test(expected = NomDEntiteDejaUtiliseDansLeMondeException.class)
@@ -75,8 +78,8 @@ public class TestVivant{
 		assertThat(vivant.getPointForce(), IsEqual.equalTo(pointForce));
 		assertThat(vivant.getPointVie(), IsEqual.equalTo(pointVie));
 		assertThat(vivant.getPiece(), IsEqual.equalTo(piece));
-		assertThat(vivant.getObjets(), IsEqual.equalTo(objets));
-		Vivant vivant1 = new Vivant("test",monde,700,20,piece,objets);
+		assertThat(vivant.getObjets(), IsEqual.equalTo(objets1));
+		Vivant vivant1 = new Vivant("test",monde,700,20,piece,objets2);
 	}
 
 	@Test(expected = ObjetNonPossedeParLeVivantException.class)
@@ -100,7 +103,7 @@ public class TestVivant{
 
 	@Test
 	public void testGetObjets(){
-		assertThat(vivant.getObjets(), IsEqual.equalTo(objets));
+		assertThat(vivant.getObjets(), IsEqual.equalTo(objets1));
 	}
 
 	@Test

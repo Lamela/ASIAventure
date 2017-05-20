@@ -1,5 +1,6 @@
 package fr.insarouen.asi.prog.asiaventure.elements;
 
+import java.io.Serializable;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
@@ -8,16 +9,18 @@ import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
   *An entity. 
   *
   *@author Lu Chenxin
+  *@serial
   */
-public abstract class Entite{
+public abstract class Entite implements java.io.Serializable{
 	private String nom;
 	private Monde monde;
 
 	/**
-	  *Constructs an entity with the specified name and world..
+	  *Constructs an entity with the specified name and world.
 	  *
 	  *@param <code>nom</code> - the name of this entity.
 	  *@param <code>monde</code> - the world where this entity exists.
+	  *@exception NomDEntiteDejaUtiliseDansLeMondeException if the name of the entity exists already in the world.
 	  */
 	public Entite(String nom, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
 		this.nom = nom;

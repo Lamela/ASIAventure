@@ -1,6 +1,7 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
 import java.util.*;
+import java.io.Serializable;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
@@ -15,7 +16,8 @@ import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 /**
   *A piece.
   *
-  *@author Lu Chenxin
+  *@author Lu Chenxin.
+  *@serial
   */
 public class Piece extends ElementStructurel {
 	

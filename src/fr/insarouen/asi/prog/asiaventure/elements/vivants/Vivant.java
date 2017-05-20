@@ -17,14 +17,16 @@ import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.Executable;
 
 
 /**
   *A living thing.
   *
   *@author Lu Chenxin
+  @serial
   */
-public class Vivant extends Entite{
+public abstract class Vivant extends Entite implements Executable{
 	private int pointVie;
 	private int pointForce;
 	private HashMap<String,Objet> objets = new HashMap<>();
@@ -42,12 +44,14 @@ public class Vivant extends Entite{
 	  *@param <code>objets</code> - the list of the objects.
 	  *@exception NomDEntiteDejaUtiliseDansLeMondeException if the name of the living thing already exists in the world.
 	  */
-	public Vivant(String nom, Monde monde, int pointVie, int pointForce, Piece piece, HashMap<String,Objet> objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
+	public Vivant(String nom, Monde monde, int pointVie, int pointForce, Piece piece, Objet... objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
 	super(nom,monde);
 	this.pointVie = pointVie;
 	this.pointForce = pointForce;
 	this.piece = piece;
-	this.objets = objets;
+	for(Objet o: objets){
+		this.objets.put(o.getNom(), o);
+	}
 	piece.entrer(this);
 	}
 
